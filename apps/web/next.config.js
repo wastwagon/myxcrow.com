@@ -5,7 +5,13 @@ const nextConfig = {
     NEXT_PUBLIC_API_BASE_URL: process.env.NEXT_PUBLIC_API_BASE_URL || 'http://localhost:4000/api',
   },
   images: {
-    domains: ['localhost'],
+    domains: ['localhost', 'onrender.com', 'myxcrow-api.onrender.com'],
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: '**.onrender.com',
+      },
+    ],
   },
   // Allow running in Docker
   output: 'standalone',

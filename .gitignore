@@ -3,8 +3,10 @@
 *.secrets.json
 
 # Environment
+.env
 .env.local
 .env.*.local
+.env.production
 
 # Dependencies
 node_modules/
@@ -43,3 +45,5 @@ temp/
 # Face recognition models (large files, downloaded via script)
 services/api/models/
 
+# Render
+.render/

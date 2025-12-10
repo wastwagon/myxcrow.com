@@ -1,0 +1,22 @@
+{
+  "name": "myxcrow",
+  "version": "1.0.0",
+  "private": true,
+  "description": "MYXCROW Escrow Platform - Full Stack Application",
+  "workspaces": [
+    "apps/*",
+    "services/*",
+    "packages/*"
+  ],
+  "scripts": {
+    "dev": "echo 'Use docker-compose for local development'",
+    "build": "echo 'Build individual services'",
+    "test": "echo 'Run tests in individual services'"
+  },
+  "engines": {
+    "node": ">=20.0.0",
+    "pnpm": ">=8.0.0"
+  },
+  "packageManager": "pnpm@8.0.0"
+}
+

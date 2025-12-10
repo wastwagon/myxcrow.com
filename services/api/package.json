@@ -8,11 +8,13 @@
     "start": "node dist/main.js",
     "prisma:migrate": "prisma generate && prisma migrate dev --name init || prisma migrate deploy && node ./scripts/seed.js",
     "prisma:generate": "prisma generate",
+    "prisma:deploy": "prisma migrate deploy",
     "prisma:studio": "prisma studio",
     "seed": "tsx scripts/seed-users-and-transactions.ts",
     "seed:bash": "bash scripts/seed.sh",
     "seed:verify": "tsx scripts/verify-seed.ts",
     "download-face-models": "bash scripts/download-face-models.sh",
+    "postinstall": "prisma generate",
     "test": "jest --runInBand"
   },
   "dependencies": {
