@@ -243,7 +243,7 @@ All modules are well-organized and follow NestJS best practices:
 - ✅ MinIO (ports 9003/9004)
 - ✅ Mailpit (ports 1026/8026)
 - ✅ API (port 4000)
-- ✅ Web (port 3003)
+- ✅ Web (port 3000)
 
 ### Production Dockerfiles: ✅ **EXCELLENT**
 

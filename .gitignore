@@ -47,3 +47,23 @@ services/api/models/
 
 # Render
 .render/
+
+# Docker volumes (local development)
+*.docker-data/
+
+# Temporary setup scripts (keep main ones, ignore duplicates)
+fix-docker-connection.sh
+fix-docker-then-setup.sh
+restart-docker-daemon.sh
+restart-docker-and-start.sh
+force-setup.sh
+robust-setup.sh
+simple-setup.sh
+quick-setup.sh
+setup-all.sh
+setup-everything.sh
+setup.sh
+start-now.sh
+DO_THIS_NOW.sh
+FINAL_SETUP.sh
+diagnose-docker.sh

@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import Layout from '@/components/Layout';
 import { isAuthenticated, isAdmin } from '@/lib/auth';
@@ -23,8 +23,10 @@ import PageHeader from '@/components/PageHeader';
 
 export default function AdminDashboard() {
   const router = useRouter();
+  const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
+    setMounted(true);
     if (!isAuthenticated()) {
       router.push('/login');
       return;
@@ -35,12 +37,15 @@ export default function AdminDashboard() {
     }
   }, [router]);
 
+  // Always call hooks in the same order - don't return early before hooks
+  // Use 'enabled' option to prevent queries from running until mounted
   const { data: escrowsData, isLoading: escrowsLoading } = useQuery<{ data?: any[]; escrows?: any[]; total?: number } | any[]>({
     queryKey: ['admin-escrows'],
     queryFn: async () => {
       const response = await apiClient.get('/escrows');
       return response.data;
     },
+    enabled: mounted && isAuthenticated() && isAdmin(), // Only fetch when ready
   });
 
   // Extract escrows array from response (handle both formats)
@@ -54,6 +59,7 @@ export default function AdminDashboard() {
       const response = await apiClient.get('/disputes');
       return response.data;
     },
+    enabled: mounted && isAuthenticated() && isAdmin(),
   });
 
   // Extract disputes array from response (handle both formats)
@@ -67,6 +73,7 @@ export default function AdminDashboard() {
       const response = await apiClient.get('/users?limit=100');
       return response.data;
     },
+    enabled: mounted && isAuthenticated() && isAdmin(),
   });
 
   // Extract users array from response (handle both formats)
@@ -80,12 +87,27 @@ export default function AdminDashboard() {
       const response = await apiClient.get('/wallet/admin?limit=100');
       return response.data;
     },
+    enabled: mounted && isAuthenticated() && isAdmin(),
   });
 
   // Extract wallets array from response (handle both formats)
   const wallets: any[] = Array.isArray(walletsData) 
     ? walletsData 
     : (walletsData?.data || walletsData?.wallets || []);
+
+  // Show loading state until mounted to prevent hydration mismatch
+  if (!mounted) {
+    return (
+      <Layout>
+        <div className="flex items-center justify-center min-h-screen">
+          <div className="text-center">
+            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-purple-600 mx-auto mb-4"></div>
+            <p className="text-gray-600">Loading...</p>
+          </div>
+        </div>
+      </Layout>
+    );
+  }
 
   if (!isAuthenticated() || !isAdmin()) {
     return null;

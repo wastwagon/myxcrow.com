@@ -42,6 +42,13 @@ export default function Dashboard() {
     if (!isAuthenticated()) {
       router.push('/login');
     } else {
+      // Redirect admins to admin dashboard instead of regular dashboard
+      const { isAdmin } = require('@/lib/auth');
+      if (isAdmin()) {
+        router.push('/admin');
+        return;
+      }
+      
       const user = getUser();
       if (user) {
         // Use firstName if available, otherwise use email prefix

@@ -1,0 +1,4 @@
+COPY AND PASTE THIS ENTIRE BLOCK INTO YOUR TERMINAL:
+
+cd /Users/OceanCyber/Downloads/myexrow && docker ps && docker-compose -f infra/docker/docker-compose.dev.yml build api && docker ps && docker-compose -f infra/docker/docker-compose.dev.yml build web && docker ps && docker-compose -f infra/docker/docker-compose.dev.yml up -d && sleep 20 && docker-compose -f infra/docker/docker-compose.dev.yml ps
+

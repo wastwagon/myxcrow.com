@@ -59,8 +59,8 @@ async function main() {
 
   // Fund some wallets
   console.log('\n💵 Funding wallets...');
-  const buyers = createdUsers.filter((u) => u.role === UserRole.BUYER);
-  const sellers = createdUsers.filter((u) => u.role === UserRole.SELLER);
+  const buyers = createdUsers.filter((u) => u.roles.includes(UserRole.BUYER));
+  const sellers = createdUsers.filter((u) => u.roles.includes(UserRole.SELLER));
 
   // Fund buyer wallets with different amounts
   const fundingAmounts = [50000, 100000, 75000, 150000, 200000]; // 500, 1000, 750, 1500, 2000 GHS

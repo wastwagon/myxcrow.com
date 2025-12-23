@@ -54,8 +54,11 @@ export class EscrowController {
     @Query('offset') offset?: string,
     @CurrentUser() user?: any,
   ) {
+    // Admins should see all escrows, not filtered by userId
+    const isAdmin = user?.roles?.includes('ADMIN') || user?.roles?.includes('AUDITOR') || user?.roles?.includes('SUPPORT');
+    
     return this.escrowService.listEscrows({
-      userId: user?.id,
+      userId: isAdmin ? undefined : user?.id,
       role,
       status,
       search,

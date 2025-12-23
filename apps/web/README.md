@@ -18,7 +18,7 @@ pnpm install
 pnpm dev
 ```
 
-The app will be available at `http://localhost:3003` (port 3003 to avoid conflicts)
+The app will be available at `http://localhost:3000`
 
 ## 📁 Project Structure
 

@@ -10,8 +10,10 @@ export default function Navigation() {
   const [user, setUser] = useState<any>(null);
   const [admin, setAdmin] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
+    setMounted(true);
     setAuthenticated(isAuthenticated());
     setUser(getUser());
     setAdmin(isAdmin());
@@ -21,6 +23,11 @@ export default function Navigation() {
     clearAuth();
     router.push('/login');
   };
+
+  // Don't render until mounted to avoid hydration mismatch
+  if (!mounted) {
+    return null;
+  }
 
   if (!authenticated) {
     return null;
@@ -52,16 +59,19 @@ export default function Navigation() {
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center gap-1">
             {/* User Menu Items */}
-            <Link
-              href="/dashboard"
-              className={`px-4 py-2 rounded-lg font-medium transition-all ${
-                isActive('/dashboard')
-                  ? 'bg-gradient-to-r from-blue-600 to-purple-600 text-white shadow-md'
-                  : 'text-gray-700 hover:bg-gray-100'
-              }`}
-            >
-              Dashboard
-            </Link>
+            {/* Hide Dashboard link for admins - they use Admin Dashboard instead */}
+            {!admin && (
+              <Link
+                href="/dashboard"
+                className={`px-4 py-2 rounded-lg font-medium transition-all ${
+                  isActive('/dashboard')
+                    ? 'bg-gradient-to-r from-blue-600 to-purple-600 text-white shadow-md'
+                    : 'text-gray-700 hover:bg-gray-100'
+                }`}
+              >
+                Dashboard
+              </Link>
+            )}
             <Link
               href="/escrows"
               className={`px-4 py-2 rounded-lg font-medium transition-all ${
@@ -197,17 +207,20 @@ export default function Navigation() {
         {/* Mobile Menu */}
         {mobileMenuOpen && (
           <div className="md:hidden border-t border-gray-200 py-4 space-y-1">
-            <Link
-              href="/dashboard"
-              onClick={() => setMobileMenuOpen(false)}
-              className={`block px-4 py-3 rounded-lg font-medium transition-all ${
-                isActive('/dashboard')
-                  ? 'bg-gradient-to-r from-blue-600 to-purple-600 text-white'
-                  : 'text-gray-700 hover:bg-gray-100'
-              }`}
-            >
-              Dashboard
-            </Link>
+            {/* Hide Dashboard link for admins - they use Admin Dashboard instead */}
+            {!admin && (
+              <Link
+                href="/dashboard"
+                onClick={() => setMobileMenuOpen(false)}
+                className={`block px-4 py-3 rounded-lg font-medium transition-all ${
+                  isActive('/dashboard')
+                    ? 'bg-gradient-to-r from-blue-600 to-purple-600 text-white'
+                    : 'text-gray-700 hover:bg-gray-100'
+                }`}
+              >
+                Dashboard
+              </Link>
+            )}
             <Link
               href="/escrows"
               onClick={() => setMobileMenuOpen(false)}
@@ -255,7 +268,7 @@ export default function Navigation() {
                       : 'text-gray-700 hover:bg-gray-100'
                   }`}
                 >
-                  Admin Dashboard
+                  Dashboard
                 </Link>
                 <Link
                   href="/admin/users"
