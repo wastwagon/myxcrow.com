@@ -21,7 +21,7 @@ services:
     region: oregon
     plan: starter
     nodeVersion: 20
-    buildCommand: pnpm install --no-frozen-lockfile && cd services/api && pnpm prisma:generate && pnpm build
+    buildCommand: bash scripts/render-build-api.sh
     startCommand: cd services/api && pnpm prisma migrate deploy && node dist/main.js
     healthCheckPath: /api/health
     envVars:
@@ -75,7 +75,7 @@ services:
     region: oregon
     plan: starter
     nodeVersion: 20
-    buildCommand: pnpm install --no-frozen-lockfile && cd apps/web && pnpm build
+    buildCommand: bash scripts/render-build-web.sh
     startCommand: cd apps/web && pnpm start
     envVars:
       - key: PORT
