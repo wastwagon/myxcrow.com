@@ -1,6 +1,6 @@
 services:
   # PostgreSQL Database
-  - type: pspg
+  - type: postgres
     name: myxcrow-db
     plan: starter
     databaseName: escrow
