@@ -20,8 +20,8 @@ services:
     env: node
     region: oregon
     plan: starter
-    buildCommand: cd services/api && pnpm install && pnpm prisma:generate && pnpm build && test -f dist/main.js && echo "✅ Build successful: dist/main.js exists" || (echo "❌ Build failed: dist/main.js not found" && exit 1)
-    startCommand: cd services/api && pnpm prisma migrate deploy && test -f dist/main.js && node dist/main.js || (echo "❌ dist/main.js not found" && ls -la dist/ && exit 1)
+    buildCommand: cd services/api && pnpm install && pnpm prisma:generate && pnpm build && echo "=== Build Verification ===" && pwd && ls -la && ls -la dist/ 2>&1 || echo "dist folder not found" && test -f dist/main.js && echo "✅ Build successful: dist/main.js exists" || (echo "❌ Build failed: dist/main.js not found" && exit 1)
+    startCommand: cd services/api && echo "=== Start Verification ===" && pwd && ls -la && ls -la dist/ 2>&1 || echo "dist folder not found" && pnpm prisma migrate deploy && test -f dist/main.js && echo "✅ Starting application..." && node dist/main.js || (echo "❌ dist/main.js not found" && ls -la dist/ 2>&1 && exit 1)
     healthCheckPath: /api/health
     envVars:
       - key: NODE_ENV
