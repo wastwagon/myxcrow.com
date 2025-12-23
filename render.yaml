@@ -23,7 +23,6 @@ services:
     dockerfilePath: ./services/api/Dockerfile.render
     dockerContext: .
     healthCheckPath: /api/health
-    healthCheckPath: /api/health
     envVars:
       - key: PORT
         value: 4000
