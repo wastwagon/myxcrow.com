@@ -33,7 +33,7 @@ FROM node:20-alpine AS production
 
 RUN npm install -g pnpm
 
-# Install canvas native dependencies (required for canvas package)
+# Install canvas native dependencies and build tools (required for canvas package)
 RUN apk add --no-cache \
     cairo \
     jpeg \
@@ -41,7 +41,10 @@ RUN apk add --no-cache \
     giflib \
     librsvg \
     pixman \
-    pkgconfig
+    pkgconfig \
+    python3 \
+    make \
+    g++
 
 WORKDIR /opt/render/project/src
 
