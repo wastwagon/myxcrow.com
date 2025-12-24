@@ -13,7 +13,8 @@ node_modules/
 .pnpm-store/
 
 # Build outputs
-dist/
+# NOTE: dist/ temporarily removed for Render deployment
+# dist/  # Commented out so Render includes dist folder
 build/
 .next/
 out/
