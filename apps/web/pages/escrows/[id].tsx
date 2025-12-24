@@ -33,6 +33,18 @@ interface Escrow {
   feeCents: number;
   netAmountCents: number;
   milestones?: any[];
+  buyer?: {
+    id: string;
+    firstName?: string;
+    lastName?: string;
+    email: string;
+  };
+  seller?: {
+    id: string;
+    firstName?: string;
+    lastName?: string;
+    email: string;
+  };
 }
 
 export default function EscrowDetailPage() {
