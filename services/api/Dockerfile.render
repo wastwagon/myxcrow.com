@@ -4,8 +4,19 @@ FROM node:20-alpine AS base
 # Install pnpm
 RUN npm install -g pnpm
 
-# Install build dependencies
-RUN apk add --no-cache python3 make g++ openssl
+# Install build dependencies including canvas native libraries
+RUN apk add --no-cache \
+    python3 \
+    make \
+    g++ \
+    openssl \
+    cairo-dev \
+    jpeg-dev \
+    pango-dev \
+    giflib-dev \
+    librsvg-dev \
+    pixman-dev \
+    pkgconfig
 
 WORKDIR /opt/render/project/src
 
@@ -34,14 +45,21 @@ FROM node:20-alpine AS production
 RUN npm install -g pnpm
 
 # Install canvas native dependencies and build tools (required for canvas package)
+# Note: Need -dev packages for compilation, runtime packages for execution
 RUN apk add --no-cache \
+    cairo-dev \
+    jpeg-dev \
+    pango-dev \
+    giflib-dev \
+    librsvg-dev \
+    pixman-dev \
+    pkgconfig \
     cairo \
     jpeg \
     pango \
     giflib \
     librsvg \
     pixman \
-    pkgconfig \
     python3 \
     make \
     g++
