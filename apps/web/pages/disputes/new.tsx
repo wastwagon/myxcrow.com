@@ -9,6 +9,7 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import apiClient from '@/lib/api-client';
 import { Loader2, AlertCircle } from 'lucide-react';
 import { toast } from 'react-hot-toast';
+import { formatCurrency } from '@/lib/utils';
 
 const disputeSchema = z.object({
   escrowId: z.string().min(1, 'Escrow ID is required'),
