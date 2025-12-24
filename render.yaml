@@ -21,8 +21,8 @@ services:
     region: oregon
     plan: starter
     nodeVersion: 20
-    buildCommand: pnpm install --no-frozen-lockfile && cd services/api && pnpm prisma:generate && pnpm build && echo "=== BUILD VERIFICATION ===" && pwd && ls -la && echo "=== DIST CONTENTS ===" && ls -la dist/ && echo "=== COPYING DIST TO PRESERVED LOCATION ===" && mkdir -p ../../build-artifacts && cp -r dist ../../build-artifacts/api-dist && ls -la ../../build-artifacts/
-    startCommand: cd services/api && pnpm prisma migrate deploy && if [ -f "dist/main.js" ]; then echo "✅ dist/main.js found, starting..."; node dist/main.js; else echo "❌ dist/main.js MISSING - Rebuilding..."; pnpm install --no-frozen-lockfile && pnpm prisma:generate && pnpm build && echo "✅ Rebuild complete, starting..."; node dist/main.js; fi
+    buildCommand: pnpm install --no-frozen-lockfile && cd services/api && pnpm prisma:generate && NODE_OPTIONS="--max-old-space-size=1024" pnpm build && echo "=== BUILD VERIFICATION ===" && pwd && ls -la && echo "=== DIST CONTENTS ===" && ls -la dist/ && echo "=== COPYING DIST TO PRESERVED LOCATION ===" && mkdir -p ../../build-artifacts && cp -r dist ../../build-artifacts/api-dist && ls -la ../../build-artifacts/
+    startCommand: cd services/api && pnpm prisma migrate deploy && [ -f dist/main.js ] && node dist/main.js || (echo 'Rebuilding...' && pnpm install --no-frozen-lockfile && pnpm prisma:generate && NODE_OPTIONS="--max-old-space-size=1024" pnpm build && node dist/main.js)
     healthCheckPath: /api/health
     envVars:
       - key: PORT
