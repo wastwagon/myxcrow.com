@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect } from 'react';
-import { Camera, X, Check } from 'lucide-react';
+import { Camera, X, Check, Upload } from 'lucide-react';
 
 interface SelfieCaptureProps {
   onCapture: (file: File) => void;
