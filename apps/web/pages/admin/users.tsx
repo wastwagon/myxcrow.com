@@ -57,7 +57,12 @@ export default function AdminUsersPage() {
       return { users: [], total: 0 };
     },
     retry: 2,
-    onError: (error: any) => {
+  });
+
+  // Handle errors using useEffect (React Query v5 doesn't support onError in useQuery)
+  useEffect(() => {
+    if (usersError) {
+      const error = usersError as any;
       console.error('Failed to fetch users:', error);
       // More detailed error logging
       if (error.code === 'ECONNREFUSED' || error.message?.includes('Network Error')) {
@@ -69,8 +74,8 @@ export default function AdminUsersPage() {
       } else {
         toast.error(error.message || 'Failed to load users. Please check your connection.');
       }
-    },
-  });
+    }
+  }, [usersError]);
 
   const updateRoleMutation = useMutation({
     mutationFn: async ({ userId, roles }: { userId: string; roles: string[] }) => {
