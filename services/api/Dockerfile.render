@@ -77,11 +77,10 @@ COPY services/api/package.json ./services/api/
 # RUN pnpm install --no-frozen-lockfile --prod
 
 # Copy built application and node_modules from base stage
-# This includes the compiled canvas module, avoiding rebuild
+# Copy entire node_modules to avoid rebuilding native modules like canvas
 COPY --from=base /opt/render/project/src/services/api/dist ./services/api/dist
-COPY --from=base /opt/render/project/src/node_modules/.prisma ./node_modules/.prisma
+COPY --from=base /opt/render/project/src/node_modules ./node_modules
 COPY --from=base /opt/render/project/src/services/api/prisma ./services/api/prisma
-COPY --from=base /opt/render/project/src/node_modules/.pnpm/canvas@2.11.2 ./node_modules/.pnpm/canvas@2.11.2
 
 WORKDIR /opt/render/project/src/services/api
 
