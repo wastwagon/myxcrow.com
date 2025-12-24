@@ -91,17 +91,18 @@ export default function AdminSettingsPage() {
   const handleSave = async (section: keyof PlatformSettings) => {
     const sectionData = settings[section];
     if (section === 'fees') {
+      const feesData = sectionData as PlatformSettings['fees'];
       await updateMutation.mutateAsync({
         key: 'fees.percentage',
-        value: sectionData.percentage,
+        value: feesData.percentage,
       });
       await updateMutation.mutateAsync({
         key: 'fees.fixedCents',
-        value: sectionData.fixedCents,
+        value: feesData.fixedCents,
       });
       await updateMutation.mutateAsync({
         key: 'fees.paidBy',
-        value: sectionData.paidBy,
+        value: feesData.paidBy,
       });
     } else {
       // For other sections, save individual keys
